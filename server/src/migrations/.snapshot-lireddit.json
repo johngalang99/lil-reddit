@@ -6,8 +6,8 @@
   "tables": [
     {
       "columns": {
-        "_id": {
-          "name": "_id",
+        "id": {
+          "name": "id",
           "type": "serial",
           "unsigned": true,
           "autoincrement": true,
@@ -51,7 +51,7 @@
         {
           "keyName": "post_pkey",
           "columnNames": [
-            "_id"
+            "id"
           ],
           "composite": false,
           "primary": true,
