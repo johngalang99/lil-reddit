@@ -4,16 +4,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@mikro-orm/core");
-const Post_1 = require("./entities/Post");
+const apollo_server_express_1 = require("apollo-server-express");
+const express_1 = __importDefault(require("express"));
+const type_graphql_1 = require("type-graphql");
 const mikro_orm_config_1 = __importDefault(require("./mikro-orm.config"));
+const hello_1 = require("./resolvers/hello");
 const main = async () => {
     const orm = await core_1.MikroORM.init(mikro_orm_config_1.default);
-    const post = orm.em.create(Post_1.Post, {
-        title: 'my first post',
+    await orm.getMigrator().up();
+    const app = (0, express_1.default)();
+    const apolloServer = new apollo_server_express_1.ApolloServer({
+        schema: await (0, type_graphql_1.buildSchema)({
+            resolvers: [hello_1.HelloResolver],
+            validate: false
+        })
     });
-    await orm.em.persistAndFlush(post);
-    console.log('-----------sql 2----------');
-    await orm.em.nativeInsert(post);
+    await apolloServer.start();
+    apolloServer.applyMiddleware({ app });
+    app.listen(4000, () => {
+        console.log('server started on localhost:4000');
+    });
 };
 main().catch((err) => console.log(err));
 //# sourceMappingURL=index.js.map
