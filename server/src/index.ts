@@ -12,9 +12,6 @@ import { PostResolver } from './resolvers/post';
 const main = async () => {
   const orm = await MikroORM.init(microConfig);
   await orm.getMigrator().up()
-  // const post = orm.em.create(Post, { title: 'my first post', } as RequiredEntityData<Post>);
-  // await orm.em.persistAndFlush(post);
-  // const posts = await orm.em.find(Post, {})
 
   const app = express()
 
