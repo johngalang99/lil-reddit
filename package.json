@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "reflect-metadata": "^0.1.13"
+    "argon2": "^0.30.3"
   }
 }
